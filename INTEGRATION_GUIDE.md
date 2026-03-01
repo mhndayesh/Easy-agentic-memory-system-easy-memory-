@@ -18,7 +18,7 @@ Instead of pointing your UI exactly to LM Studio (e.g., `http://localhost:1234/v
 The Proxy will automatically:
 1. Hijack the `/v1/chat/completions` endpoint.
 2. Inject the `search_database` tool definition into your prompts.
-3. Automatically intercept the LLM if it tries to search for a fact, run the Librarian/Thinker pipeline, and seamlessly return the final augmented answer back to your UI.
+3. Automatically intercept the LLM if it tries to search for a fact, run the Librarian pipeline, and seamlessly return the raw factual chunks back to your LLM to synthesize.
 
 *Note: Your UI must support OpenAI function calling/tools for this auto-injection to work correctly.*
 
@@ -49,7 +49,7 @@ In LangChain, CrewAI, or AutoGPT, define a custom tool that sends an HTTP POST r
 import requests
 
 def agentic_memory_search(query: str) -> str:
-    """Search the local 14-Million-Word database for factual information."""
+    """Search the local semantic database for factual information."""
     res = requests.post("http://localhost:8000/v1/memory/search", json={"query": query})
     return res.json().get("result", "Search failed.")
 ```

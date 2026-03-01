@@ -21,17 +21,10 @@ When you run `/save` or manually ingest data, the text is split into chunks befo
 
 ### `top_k`
 *   **Default**: 5
-*   **What it does**: The number of chunks the `SentenceTransformer` (Librarian) retrieves when a tool call happens.
+*   **What it does**: The number of chunks the Librarian retrieves when the `search_database` tool is called. These raw chunks are passed directly to the Speaker (your main LLM) as the tool result.
 *   **Tuning**:
-    *   **Increase**: If the agent is missing crucial context that you know exists in the dataset. Note that passing more context chunks requires more compute from the Thinker model (RWKV).
-    *   **Decrease**: To speed up the Thinker model if inference is taking too long.
-
-### `thinker_tokens`
-*   **Default**: 400
-*   **What it does**: The total number of tokens the RWKV Thinker model is allowed to generate when summarizing retrieved chunks into a final RAG report.
-*   **Tuning**:
-    *   **Increase**: If you notice the Thinker model's responses getting cut off mid-sentence before returning the tool result.
-    *   **Decrease**: If the Thinker is hallucinating or rambling unnecessarily. A concise summary of the facts is ideal for the final LLM payload.
+    *   **Increase**: If the agent is missing crucial context that you know exists in the dataset. Note that passing more context chunks takes up more of the Speaker LLM's context window.
+    *   **Decrease**: To keep prompts lean and save context window space.
 
 ## 3. Batch Size (Manual Ingestion Only)
 If you are writing a custom ingestion script, you should batch your tensor inputs.

@@ -19,11 +19,11 @@ If you want to completely wipe the Agent's memory (e.g., to switch datasets or c
 5. **Restart the Server**. It will detect the missing index and start with a fresh, empty 0-byte memory state.
 
 ## 3. Manual Bulk Ingestion
-If you have a massive dataset (like the 14-million word text file) or a new folder of documents you want the agent to learn all at once, you should write a script to bulk-ingest it rather than typing it in chat.
+If you have a massive dataset or a new folder of documents you want the agent to learn all at once, you should write a script to bulk-ingest it rather than typing it in chat.
 
 ### Steps for Manual Ingestion:
 1. Ensure the proxy server is **stopped** (so it doesn't try to write to the index at the same time).
-2. Create a Python script using the identical `SentenceTransformer` logic found in `manager.py`. (You can refer to `c:/LAYERD-DB/three_layered_agent/scripts/ingest_v3.py` for an example of a batch ingestion script).
+2. Create a Python script using the identical `SentenceTransformer` logic found in `manager.py`.
 3. Read your raw text, chunk it (see `TUNING_ACCURACY.md`), and compute the embeddings in **batches**.
 4. Save the resulting dictionary mapped to chunk IDs (`{"chunk_0": {"vector": [...], "text": "..."}}`) to `index/librarian_index.json`.
 5. Start the proxy server. It will automatically load the new index into RAM on boot.
@@ -31,6 +31,6 @@ If you have a massive dataset (like the 14-million word text file) or a new fold
 ### Test the Memory
 To test if ingestion (auto or manual) worked, you do not need the UI. Simply use the provided test client:
 ```bash
-python test_client.py "Search the database to find out about [YOUR KEYWORD]."
+python test_client.py "Use the search_database tool to look up: [YOUR KEYWORD]"
 ```
-If the Librarian finds a match, it will trigger the Thinker model, which will summarize the newly ingested fact.
+If the Librarian finds a match, the raw chunks will be passed directly to the Speaker LLM, which will synthesize the answer for you.
