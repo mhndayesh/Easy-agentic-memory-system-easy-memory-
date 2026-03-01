@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.env
+.DS_Store
+
+# Ignore actual memory data from being published
+index/
+archive/
+active_chats/current_session.txt
+verify_standalone.txt

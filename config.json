@@ -1,0 +1,19 @@
+{
+    "server": {
+        "host": "0.0.0.0",
+        "port": 8000,
+        "lm_studio_url": "http://localhost:1234/v1/chat/completions"
+    },
+    "models": {
+        "embedding_model_path": "C:/Users/mhnda/.cache/huggingface/hub/models--sentence-transformers--all-mpnet-base-v2/snapshots/e8c3b32edf5434bc2275fc9bab85f82640a19130",
+        "thinker_model_path": "c:/LAYERD-DB/rwkv_experiment/model_weights/RWKV-x060-World-1B6-v2.1-20240328-ctx4096.pth"
+    },
+    "chunking": {
+        "chunk_size": 250,
+        "overlap": 50
+    },
+    "retrieval": {
+        "top_k": 5,
+        "thinker_tokens": 400
+    }
+}
